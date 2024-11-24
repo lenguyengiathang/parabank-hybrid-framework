@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="NopCommerce">
+
+	<listeners>
+		<listener class-name="commons.MethodListener" />
+		<listener class-name="reportConfig.AllureTestListener" />
+	</listeners>
+	
+	<parameter name="url" value="https://parabank.parasoft.com/parabank/admin.htm"/>
+
+	<test name="Run on Chrome">
+		<parameter name="browser" value="chrome" />
+		<classes>
+			<class name="com.parabank.user.Homepage" />
+		</classes>
+	</test>
+
+</suite>
