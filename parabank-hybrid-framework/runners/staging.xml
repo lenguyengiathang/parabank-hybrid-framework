@@ -12,7 +12,7 @@
 	<test name="Run on Chrome">
 		<parameter name="browser" value="chrome" />
 		<classes>
-			<class name="com.parabank.user.Homepage" />
+			<class name="com.parabank.user.Register" />
 		</classes>
 	</test>
 

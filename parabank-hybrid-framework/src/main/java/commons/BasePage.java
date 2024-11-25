@@ -401,7 +401,7 @@ public class BasePage {
 			fullFileName = fullFileName + filePath + File.separator + file + "\n";
 		}
 		fullFileName = fullFileName.trim();
-		getWebElement(driver, BasePageUI.UPLOAD_FILE_PATH).sendKeys(fullFileName);
+		getWebElement(driver, BasePageUI.UPLOAD_FILE).sendKeys(fullFileName);
 	}
 
 	public String getElementValueByJS(WebDriver driver, String xpathLocator) {

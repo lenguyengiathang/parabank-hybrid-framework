@@ -16,12 +16,14 @@ import utilities.DataHelper;
 public class Register extends BaseTest {
 	@Parameters("browser")
 	@BeforeClass
-	public void beforeClass(String browserName) {
-		driver = getBrowserDriver(browserName);
+	public void beforeClass(String browser) {
+		driver = getBrowserDriver(browser);
 		homepage = PageGeneratorManager.getUserHomepage(driver);
+
+		data = DataHelper.getDataHelper();
 		firstName = data.getFirstName();
 		lastName = data.getLastName();
-		username = firstName.concat(lastName).toLowerCase() + generateRandomNumber();
+		username = firstName.concat(lastName).toLowerCase();
 		password = data.getPassword();
 	}
 
@@ -46,6 +48,7 @@ public class Register extends BaseTest {
 	@Test
 	public void TC_02_Register_With_Incorrect_Confirmation_Password() {
 		registerPage.refreshCurrentPage(driver);
+		registerPage.refreshCurrentPage(driver);
 
 		registerPage.sendKeysToFirstNameTextbox(firstName);
 		registerPage.sendKeysToLastNameTextbox(lastName);
@@ -56,7 +59,7 @@ public class Register extends BaseTest {
 		registerPage.sendKeysToSocialSecurityNumberTextbox(data.getSocialSecurityNumber());
 		registerPage.sendKeysToUsernameTextbox(username);
 		registerPage.sendKeysToPasswordTextbox(password);
-		registerPage.sendKeysToConfirmPasswordTextbox("abcdef");
+		registerPage.sendKeysToConfirmPasswordTextbox("abc");
 		registerPage.clickRegisterButton();
 
 		Assert.assertEquals(registerPage.getConfirmPasswordErrorMessage(), "Passwords did not match.");
@@ -64,6 +67,7 @@ public class Register extends BaseTest {
 
 	@Test
 	public void TC_03_Register_Without_Phone() {
+		registerPage.refreshCurrentPage(driver);
 		registerPage.refreshCurrentPage(driver);
 
 		registerPage.sendKeysToFirstNameTextbox(firstName);
@@ -86,17 +90,52 @@ public class Register extends BaseTest {
 
 	@Test
 	public void TC_04_Register_With_Phone() {
+		registerPage.refreshCurrentPage(driver);
+		registerPage.refreshCurrentPage(driver);
 
+		registerPage.sendKeysToFirstNameTextbox(firstName);
+		registerPage.sendKeysToLastNameTextbox(lastName);
+		registerPage.sendKeysToAddressTextbox(data.getAddress());
+		registerPage.sendKeysToCityTextbox(data.getCity());
+		registerPage.sendKeysToStateTextbox(data.getState());
+		registerPage.sendKeysToZipCodeTextbox(data.getZipCode());
+		registerPage.sendKeysToSocialSecurityNumberTextbox(data.getSocialSecurityNumber());
+		registerPage.sendKeysToPhoneTextbox(data.getPhoneNumber());
+		registerPage.sendKeysToUsernameTextbox(username + "01");
+		registerPage.sendKeysToPasswordTextbox(password);
+		registerPage.sendKeysToConfirmPasswordTextbox(password);
+		registerPage.clickRegisterButton();
+
+		Assert.assertEquals(registerPage.getWelcomeMessage(), "Welcome " + username + "01");
+		Assert.assertEquals(registerPage.getAccountCreatedSuccessfullyMessage(),
+				"Your account was created successfully. You are now logged in.");
 	}
 
 	@Test
-	public void TC_05_Register_With_Existing_Username() {
+	public void TC_04_Register_With_Existing_Username() {
+		registerPage.refreshCurrentPage(driver);
+		registerPage.refreshCurrentPage(driver);
 
+		registerPage.sendKeysToFirstNameTextbox(firstName);
+		registerPage.sendKeysToLastNameTextbox(lastName);
+		registerPage.sendKeysToAddressTextbox(data.getAddress());
+		registerPage.sendKeysToCityTextbox(data.getCity());
+		registerPage.sendKeysToStateTextbox(data.getState());
+		registerPage.sendKeysToZipCodeTextbox(data.getZipCode());
+		registerPage.sendKeysToSocialSecurityNumberTextbox(data.getSocialSecurityNumber());
+		registerPage.sendKeysToPhoneTextbox(data.getPhoneNumber());
+		registerPage.sendKeysToUsernameTextbox(username);
+		registerPage.sendKeysToPasswordTextbox(password);
+		registerPage.sendKeysToConfirmPasswordTextbox(password);
+		registerPage.clickRegisterButton();
+
+		Assert.assertEquals(registerPage.getWelcomeMessage(), "Welcome " + username);
+		Assert.assertEquals(registerPage.getUsernameErrorMessage(), "This username already exists.");
 	}
 
-	@AfterClass
+	@AfterClass(alwaysRun = true)
 	public void afterClass() {
-		driver.quit();
+		closeBrowserAndDriver();
 	}
 
 	private WebDriver driver;
