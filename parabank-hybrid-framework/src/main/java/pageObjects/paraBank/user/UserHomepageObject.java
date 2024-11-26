@@ -41,10 +41,15 @@ public class UserHomepageObject extends BasePage {
 		return PageGeneratorManager.getUserRegisterPage(driver);
 	}
 
-	public UserCustomerLookupPageObject clickForgotLoginInfoLink(WebDriver driver) {
+	public UserCustomerLookupPageObject clickForgotLoginInfoLink() {
 		waitForElementClickable(driver, UserHomepageUI.FORGOT_LOGIN_INFO_LINK);
 		clickElement(driver, UserHomepageUI.FORGOT_LOGIN_INFO_LINK);
 		return PageGeneratorManager.getUserCustomerLookupPage(driver);
+	}
+
+	public String getInfoMessage() {
+		waitForElementVisible(driver, UserHomepageUI.INFO_MESSAGE);
+		return getElementText(driver, UserHomepageUI.INFO_MESSAGE);
 	}
 
 }

@@ -526,4 +526,27 @@ public class BasePage {
 		}
 	}
 
+	public BasePage clickAccountServicesLinkByName(WebDriver driver, String pageName) {
+		waitForElementClickable(driver, BasePageUI.DYNAMIC_LINK_LEFT_SIDEBAR_BY_LABEL, pageName);
+		clickElement(driver, BasePageUI.DYNAMIC_LINK_LEFT_SIDEBAR_BY_LABEL, pageName);
+		switch (pageName) {
+		case "Open New Account":
+			return PageGeneratorManager.getOpenNewAccountPage(driver);
+		case "Accounts Overview":
+			return PageGeneratorManager.getAccountsOverviewPage(driver);
+		case "Transfer Funds":
+			return PageGeneratorManager.getTransferFundsPage(driver);
+		case "Bill Pay":
+			return PageGeneratorManager.getBillPayPage(driver);
+		case "Find Transactions":
+			return PageGeneratorManager.getFindTransactionsPage(driver);
+		case "Update Contact Info":
+			return PageGeneratorManager.getUpdateContactInfoPage(driver);
+		case "Request Loan":
+			return PageGeneratorManager.getRequestLoanPage(driver);
+		default:
+			throw new RuntimeException("Page name is not valid.");
+		}
+	}
+
 }
